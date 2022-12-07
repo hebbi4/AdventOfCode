@@ -1,4 +1,7 @@
 import string
+import time
+
+start = time.time()
 
 #importing file and cleaing it up
 text_file = 'input'
@@ -13,7 +16,7 @@ sumINeed = 0
 currentDirL = []
 currentDirS = ''
 dirSize = {}
-allFiles = 0
+allFiles = 0 #added for part 2
 
 for line in clean:
   line = line.split()
@@ -25,13 +28,16 @@ for line in clean:
       else:  
         currentDirL.append(line[2])
         currentDirS = ''
+        #This is done to create a uniqe key in the dictionary
+        #since there are duplicate directory names
         for i in range(len(currentDirL)):
           currentDirS += currentDirL[i] + '/'
         if currentDirS not in dirSize.keys():
           dirSize[currentDirS] = 0
   elif line[0] != 'dir':
-    allFiles += int(line[0])
+    allFiles += int(line[0]) #added for part 2
     currentDirS = ''
+    #making sure to add the size to all parent directories
     for i in range(len(currentDirL)):
       currentDirS += currentDirL[i] + '/'
       dirSize[currentDirS] += int(line[0])
@@ -41,7 +47,6 @@ for i in dirSize:
     sumINeed += dirSize[i]
 
 #answer is 1367870
-print(allFiles)
 print(sumINeed)
 
 #part 2
@@ -57,3 +62,6 @@ for i in dirSize:
 
 print(needToDelete)
 print(sizeToDelete)
+
+end = time.time()
+print(end-start)
